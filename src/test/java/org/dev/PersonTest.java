@@ -1,6 +1,5 @@
 package org.dev;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PersonTest {
     @Test
-    @Disabled("miriam should be an adult")
+    @DisplayName("miriam should be an adult")
     public void miriam_should_be_an_adult() {
         Person miriam = new Person("Miriam", 12);
         assertThat(miriam.age())
@@ -21,6 +20,15 @@ public class PersonTest {
         Person miriam = new Person("Miriam", 12);
         assertThat(miriam.age())
                 .describedAs("is an adult")
+                .isGreaterThanOrEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("withFailMessage() will display only the message passed if the assertion fail without the normal assertion message")
+    public void with_fail_message_will_display_only_the_message_passed_if_the_assertion_fail_without_the_normal_assertion_message() throws Exception {
+        Person miriam = new Person("Miriam", 12);
+        assertThat(miriam.age())
+                .withFailMessage("is not an adult")
                 .isGreaterThanOrEqualTo(18);
     }
 }
