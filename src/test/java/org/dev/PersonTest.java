@@ -1,5 +1,6 @@
 package org.dev;
 
+import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,5 +39,15 @@ public class PersonTest {
         Person miriam = new Person("Miriam", 12);
         assertThat(miriam)
                 .matches(it -> it.age() > 18, "is an adult");
+    }
+
+    private final Condition<Person> anAdult = new Condition<>(it -> it.age() >= 18, "an adult");
+    private final Condition<Person> aChild = new Condition<>(it -> it.age() < 18, "a child");
+
+    @Test
+    @DisplayName("will display a domain condition message based on the condition passed")
+    public void will_display_a_domain_condition_message_based_on_the_condition_passed() throws Exception {
+        Person miriam = new Person("Miriam", 12);
+        assertThat(miriam).is(anAdult);
     }
 }
