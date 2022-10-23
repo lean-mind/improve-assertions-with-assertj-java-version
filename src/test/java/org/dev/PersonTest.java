@@ -31,4 +31,12 @@ public class PersonTest {
                 .withFailMessage("is not an adult")
                 .isGreaterThanOrEqualTo(18);
     }
+
+    @Test
+    @DisplayName("will display the message that you passed when the passed supplier returns false")
+    public void will_display_the_message_that_you_passed_when_the_passed_supplier_returns_false() throws Exception {
+        Person miriam = new Person("Miriam", 12);
+        assertThat(miriam)
+                .matches(it -> it.age() > 18, "is an adult");
+    }
 }
