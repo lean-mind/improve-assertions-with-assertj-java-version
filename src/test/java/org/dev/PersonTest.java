@@ -1,6 +1,7 @@
 package org.dev;
 
 import org.assertj.core.api.Condition;
+import org.dev.custom.assertions.PersonAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PersonTest {
     @Test
-    @DisplayName("miriam should be an adult")
+    @DisplayName("Basic Assertion - miriam should be an adult")
     public void miriam_should_be_an_adult() {
         Person miriam = new Person("Miriam", 12);
         assertThat(miriam.age())
@@ -34,7 +35,7 @@ public class PersonTest {
     }
 
     @Test
-    @DisplayName("will display the message that you passed when the passed supplier returns false")
+    @DisplayName("Use Matches with Predicate - will display the message that you passed when the passed supplier returns false")
     public void will_display_the_message_that_you_passed_when_the_passed_supplier_returns_false() throws Exception {
         Person miriam = new Person("Miriam", 12);
         assertThat(miriam)
@@ -45,9 +46,16 @@ public class PersonTest {
     private final Condition<Person> aChild = new Condition<>(it -> it.age() < 18, "a child");
 
     @Test
-    @DisplayName("will display a domain condition message based on the condition passed")
+    @DisplayName("Use Condition - will display a domain condition message based on the condition passed")
     public void will_display_a_domain_condition_message_based_on_the_condition_passed() throws Exception {
         Person miriam = new Person("Miriam", 12);
         assertThat(miriam).is(anAdult);
+    }
+
+    @Test
+    @DisplayName("Custom Assert - will display our own assertions and failure messages")
+    public void will_display_our_own_assertions_and_failure_messages() throws Exception {
+        Person miriam = new Person("Miriam", 12);
+        PersonAssert.assertThat(miriam).isAdult();
     }
 }
